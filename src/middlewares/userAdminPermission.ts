@@ -5,7 +5,7 @@ interface Payload {
     role: string
 }
 
-export function isRole(userRole: string[]) {
+export function isRoleUserAdmin(userRole: string[]) {
    
         const authorizedRole = async (req: Request, res: Response, next: NextFunction) => {
 

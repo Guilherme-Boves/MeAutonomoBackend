@@ -4,9 +4,11 @@ import { DashboardProfissionalController } from './controllers/dashboard/Dashboa
 import { AuthUserController } from './controllers/user/AuthUserController';
 import { CreateUserClienteController } from './controllers/user/CreateUserClienteController';
 import { CreateUserProfissionalController } from './controllers/user/CreateUserProfissionalController';
-import { DetailUserController } from './controllers/user/DetailUserController';
+
 import { isAuthenticated } from './middlewares/isAuthenticated';
-import { isRole } from './middlewares/permission'
+import { isRoleUserAdmin } from './middlewares/userAdminPermission'
+
+import { DetailUserController } from './controllers/user/DetailUserController';
 
 const router = Router();
 
@@ -19,8 +21,8 @@ router.post('/users/profissional', new CreateUserProfissionalController().handle
 router.post('/session', new AuthUserController().handle)
 //Detalhes do Usuário
 router.get('/userinfo', isAuthenticated, new DetailUserController().handle);
-router.get('/dashboard/cliente', isAuthenticated, isRole(['cliente', 'admin']), new DashboardClienteController().handle )
-router.get('/dashboard/profissional', isAuthenticated, isRole(['profissional', 'admin']), new DashboardProfissionalController().handle )
-
+//Menu Principal de cada Usuário
+router.get('/dashboard/cliente', isAuthenticated, isRoleUserAdmin(['cliente', 'admin']), new DashboardClienteController().handle )
+router.get('/dashboard/profissional', isAuthenticated, isRoleUserAdmin(['profissional', 'admin']), new DashboardProfissionalController().handle )
 
 export { router };

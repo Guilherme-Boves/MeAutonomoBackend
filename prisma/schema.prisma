@@ -11,13 +11,130 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
-  name String
-  email String
-  password String
-  role String
-  created_at DateTime? @default(now())
-  updated_at DateTime? @default(now())
+  id             String @id @default(uuid())
+  nome           String
+  email          String @unique
+  password       String
+  role           String
+  dataNascimento DateTime?
+  telefone       String
+  created_at     DateTime? @default(now())
+  updated_at     DateTime? @default(now())
 
   @@map("users")
+
+  userCliente           UserCliente[]
+  userProfissional      UserProfissional[]
+  servicosPrestadosProf ServicosPrestadosProf[]
+  agenda                Agenda[]
+  publicarServico       PublicarServico[]
+  contrato              Contratos[]
+  avalicacao            Avaliacao[]
+}
+
+model UserCliente {
+  id  String @id @default(uuid())
+  cpf String @unique
+
+  user User @relation(fields: [user_id], references: [id])
+  
+  @@map("userCliente")
+  user_id String
+}
+
+model UserProfissional {
+  id   String @id @default(uuid())
+  cnpj String @unique
+  descricaoSobreMim String?
+
+  user User @relation(fields: [user_id], references: [id])
+  
+  @@map("userProfissional")
+  user_id String
+}
+
+model ServicosPrestadosProf {
+  id    String @id @default(uuid())
+  nome  String
+  preco String
+
+  user User @relation(fields: [user_id], references: [id])  
+  publicarServico PublicarServico[]
+  @@map("servicosPrestadosProf")
+  user_id String  
+}
+
+model Agenda {
+  id      String @id @default(uuid())
+  dia     Int
+  mes     String
+  horario String
+  status  Boolean @default(false)
+
+  user User @relation(fields: [user_id], references: [id])
+  publicarServico PublicarServico[]
+  @@map("agenda")
+
+  user_id String
+}
+
+model Categoria {
+  id     String @id @default(uuid())
+  nome   String
+  imagem String
+
+  tipoDoServico TipoDoServico[]
+  @@map("categoria")
+}
+
+model TipoDoServico {
+  id     String @id @default(uuid())
+  nome   String
+  imagem String
+
+  categoria Categoria @relation(fields: [categoria_id], references: [id])
+  publicarServico PublicarServico[]
+  @@map("tipoDoServico")
+  categoria_id String
+}
+
+
+model PublicarServico {
+  id                      String                 @id @default(uuid())
+  descricaoServico        String
+
+  tipoDoServico           TipoDoServico          @relation(fields: [tipoDoServico_id], references: [id])
+  servicoPrestadosProf    ServicosPrestadosProf  @relation(fields: [servicoPrestadosProf_id], references: [id])
+  agenda                  Agenda                 @relation(fields: [agenda_id], references: [id])
+  user                    User                   @relation(fields: [user_id], references: [id]) 
+  contrato                Contratos[]
+  @@map("publicarServico")
+  tipoDoServico_id        String
+  servicoPrestadosProf_id String
+  agenda_id               String
+  user_id                 String
+}
+
+model Contratos {
+  id                 String          @id @default(uuid())
+  user               User            @relation(fields: [user_id], references: [id])
+  publicarServico    PublicarServico @relation(fields: [publicarServico_id], references: [id])
+  avaliacao          Avaliacao[]
+  status             Boolean         @default(false)
+
+  @@map("contratos")
+  user_id            String
+  publicarServico_id String
+}
+
+model Avaliacao {
+  id        String        @id @default(uuid())  
+  descricao String
+  nota      Int
+  user      User          @relation(fields: [user_id], references: [id])
+  contrato  Contratos     @relation(fields: [contrato_id], references: [id])
+  @@map("avaliacao")
+
+  user_id String
+  contrato_id String
 }

@@ -31,7 +31,7 @@ class AuthUserService {
         // Gerar um Token JWT 
         const token = sign(
             {
-                name: user.name,
+                nome: user.nome,
                 email: user.email,
                 role: user.role
             },
@@ -44,7 +44,7 @@ class AuthUserService {
 
         return {
             id: user.id,
-            name: user.name,
+            nome: user.nome,
             email: user.email,
             token: token
         }

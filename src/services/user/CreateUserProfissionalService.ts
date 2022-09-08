@@ -1,14 +1,19 @@
 import prismaClient from "../../prisma";
 import { hash } from 'bcryptjs'
+import { dateFormat } from './CreateUserClienteService';
 
 interface UserRequest {
-    name: string;
+    nome: string;
     email: string;
     password: string;
+    telefone: string;
+    dataNascimento: string;
+    cnpj: string;
+    descricaoSobreMim: string
 }
 
 class CreateUserProfissionalService{
-    async execute({ name, email, password }: UserRequest){
+    async execute({ nome, email, password, telefone, dataNascimento, cnpj, descricaoSobreMim }: UserRequest){
         
         if(!email){
             throw new Error("Email incorreto")
@@ -28,16 +33,31 @@ class CreateUserProfissionalService{
 
         const user = await prismaClient.user.create({
             data: {
-                name: name,
+                nome: nome,
                 email: email,
                 password: passwordHash,
-                role: "profissional"
+                role: "profissional",                
+                telefone: telefone,
+                dataNascimento: dateFormat(dataNascimento),
+                userProfissional: {
+                    create:{
+                        cnpj: cnpj,
+                        descricaoSobreMim: descricaoSobreMim
+                    }
+                }     
             },
             select:{
-                id: true,
-                name: true,
+                nome: true,
                 email: true,
                 role: true,
+                dataNascimento: true,
+                telefone: true,
+                userProfissional:{
+                    select:{
+                        cnpj: true,
+                        descricaoSobreMim: true
+                    }
+                }
             }
         })
 

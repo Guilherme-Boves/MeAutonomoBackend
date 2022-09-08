@@ -3,14 +3,18 @@ import { CreateUserProfissionalService } from "../../services/user/CreateUserPro
 
 class CreateUserProfissionalController{
     async handle(req: Request, res: Response){
-        const { name, email, password} = req.body;
+        const { nome, email, password, telefone, dataNascimento, cnpj, descricaoSobreMim } = req.body;
 
         const createUserProfissionalService = new CreateUserProfissionalService();
 
         const user = await createUserProfissionalService.execute({
-            name, 
+            nome, 
             email, 
-            password
+            password,
+            telefone,
+            dataNascimento,
+            cnpj,
+            descricaoSobreMim
         })
         
         return res.json(user);

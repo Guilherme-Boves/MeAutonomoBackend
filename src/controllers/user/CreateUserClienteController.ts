@@ -3,14 +3,17 @@ import { CreateUserClienteService } from "../../services/user/CreateUserClienteS
 
 class CreateUserClienteController{
     async handle(req: Request, res: Response){
-        const { name, email, password} = req.body;
+        const { nome, email, password, telefone, dataNascimento, cpf } = req.body;
 
         const createUserClienteService = new CreateUserClienteService();
 
         const user = await createUserClienteService.execute({
-            name, 
+            nome, 
             email, 
-            password
+            password,
+            telefone,
+            dataNascimento,
+            cpf
         })
         
         return res.json(user);
