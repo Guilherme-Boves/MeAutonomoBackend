@@ -36,7 +36,7 @@ class CreateUserProfissionalService{
                 nome: nome,
                 email: email,
                 password: passwordHash,
-                role: "profissional",                
+                role: "PROFISSIONAL",                
                 telefone: telefone,
                 dataNascimento: dateFormat(dataNascimento),
                 userProfissional: {

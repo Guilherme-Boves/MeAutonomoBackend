@@ -9,7 +9,7 @@ class DetailUserService{
             }
         })
 
-        if(user.role === "cliente"){
+        if(user.role === "CLIENTE"){
             const userCliente = await prismaClient.user.findFirst({
                 where: {
                     id: user_id,
@@ -30,7 +30,7 @@ class DetailUserService{
             })
             return userCliente;
         }
-        else if(user.role === "profissional"){
+        else if(user.role === "PROFISSIONAL"){
             const userProfissional = await prismaClient.user.findFirst({
                 where: {
                     id: user_id

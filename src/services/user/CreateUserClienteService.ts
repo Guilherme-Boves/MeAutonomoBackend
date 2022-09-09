@@ -48,7 +48,7 @@ class CreateUserClienteService{
                 nome: nome,
                 email: email,
                 password: passwordHash,
-                role: "cliente",                
+                role: "CLIENTE",                
                 telefone: telefone,
                 dataNascimento: dateFormat(dataNascimento),
                 userCliente:{

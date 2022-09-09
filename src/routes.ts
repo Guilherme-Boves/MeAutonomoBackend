@@ -6,13 +6,14 @@ import { CreateUserClienteController } from './controllers/user/CreateUserClient
 import { CreateUserProfissionalController } from './controllers/user/CreateUserProfissionalController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated';
-import { isRoleCliente } from './middlewares/clientePermission'
-import { isRoleAdmin } from './middlewares/adminPermission';
 
 import { DetailUserController } from './controllers/user/DetailUserController';
 import { CreateCategoriaController } from './controllers/categoria/CreateCategoriaController';
-import { isRoleProfissional } from './middlewares/profissionalPermission';
 
+import { isRoleAdmin } from './middlewares/userPermissions/adminPermission';
+import { isRoleCliente } from './middlewares/userPermissions/clientePermission';
+import { isRoleProfissional } from './middlewares/userPermissions/profissionalPermission';
+import { isRoleClienteProfissional } from './middlewares/userPermissions/clienteProfissionalPermission';
 
 const router = Router();
 
@@ -24,10 +25,10 @@ router.post('/users/profissional', new CreateUserProfissionalController().handle
 //Login de usuários
 router.post('/session', new AuthUserController().handle)
 //Detalhes do Usuário
-router.get('/userinfo', isAuthenticated, new DetailUserController().handle);
+router.get('/userinfo', isAuthenticated, /*isRoleClienteProfissional,*/ new DetailUserController().handle);
 //Menu Principal de cada Usuário
-router.get('/dashboard/cliente', isAuthenticated, isRoleCliente('cliente'), new DashboardClienteController().handle )
-router.get('/dashboard/profissional', isAuthenticated, isRoleProfissional('profissional'), new DashboardProfissionalController().handle )
+router.get('/dashboard/cliente', isAuthenticated, isRoleCliente, new DashboardClienteController().handle )
+router.get('/dashboard/profissional', isAuthenticated, isRoleProfissional, new DashboardProfissionalController().handle )
 //Cadastrando Categorias
-router.post('/categoria', isAuthenticated, isRoleAdmin(['admin', 'profissional']), new CreateCategoriaController().handle)
+router.post('/categoria', isAuthenticated, isRoleAdmin, new CreateCategoriaController().handle)
 export { router };
