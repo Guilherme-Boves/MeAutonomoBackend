@@ -6,9 +6,13 @@ import { CreateUserClienteController } from './controllers/user/CreateUserClient
 import { CreateUserProfissionalController } from './controllers/user/CreateUserProfissionalController';
 
 import { isAuthenticated } from './middlewares/isAuthenticated';
-import { isRoleUserAdmin } from './middlewares/userAdminPermission'
+import { isRoleCliente } from './middlewares/clientePermission'
+import { isRoleAdmin } from './middlewares/adminPermission';
 
 import { DetailUserController } from './controllers/user/DetailUserController';
+import { CreateCategoriaController } from './controllers/categoria/CreateCategoriaController';
+import { isRoleProfissional } from './middlewares/profissionalPermission';
+
 
 const router = Router();
 
@@ -22,7 +26,8 @@ router.post('/session', new AuthUserController().handle)
 //Detalhes do Usuário
 router.get('/userinfo', isAuthenticated, new DetailUserController().handle);
 //Menu Principal de cada Usuário
-router.get('/dashboard/cliente', isAuthenticated, isRoleUserAdmin(['cliente', 'admin']), new DashboardClienteController().handle )
-router.get('/dashboard/profissional', isAuthenticated, isRoleUserAdmin(['profissional', 'admin']), new DashboardProfissionalController().handle )
-
+router.get('/dashboard/cliente', isAuthenticated, isRoleCliente('cliente'), new DashboardClienteController().handle )
+router.get('/dashboard/profissional', isAuthenticated, isRoleProfissional('profissional'), new DashboardProfissionalController().handle )
+//Cadastrando Categorias
+router.post('/categoria', isAuthenticated, isRoleAdmin(['admin', 'profissional']), new CreateCategoriaController().handle)
 export { router };
