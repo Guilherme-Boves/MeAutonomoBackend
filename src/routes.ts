@@ -1,4 +1,6 @@
 import { Router, Request, Response } from 'express'
+import multer from 'multer';
+
 import { DashboardClienteController } from './controllers/dashboard/DashboardClienteContoller';
 import { DashboardProfissionalController } from './controllers/dashboard/DashboardProfissionalController';
 import { AuthUserController } from './controllers/user/AuthUserController';
@@ -15,7 +17,14 @@ import { isRoleCliente } from './middlewares/userPermissions/clientePermission';
 import { isRoleProfissional } from './middlewares/userPermissions/profissionalPermission';
 import { isRoleClienteProfissional } from './middlewares/userPermissions/clienteProfissionalPermission';
 
+import uploadConfig from './config/multer'
+import { ListCategoriaController } from './controllers/categoria/ListCategoriaController';
+import { CreateTipoServicoController } from './controllers/tiposervico/CreateTipoServicoController';
+import { ListTipoServicoController } from './controllers/tiposervico/ListTipoServicoController';
+import { CreateServicoPrestadosController } from './controllers/servicosprestados/CreateServicoPrestadosController'
+
 const router = Router();
+const upload = multer(uploadConfig.upload("./tmp"))
 
 // -- ROTAS USERS --
 // Cadastrando clientes
@@ -29,6 +38,20 @@ router.get('/userinfo', isAuthenticated, /*isRoleClienteProfissional,*/ new Deta
 //Menu Principal de cada Usuário
 router.get('/dashboard/cliente', isAuthenticated, isRoleCliente, new DashboardClienteController().handle )
 router.get('/dashboard/profissional', isAuthenticated, isRoleProfissional, new DashboardProfissionalController().handle )
-//Cadastrando Categorias
-router.post('/categoria', isAuthenticated, isRoleAdmin, new CreateCategoriaController().handle)
+
+// -- ROTAS CATEGORIA --
+// Listando todas categorias
+router.get('/categoria', isAuthenticated, new ListCategoriaController().handle)
+// Cadastrando categorias
+router.post('/categoria', isAuthenticated, isRoleAdmin, upload.single('file'), new CreateCategoriaController().handle)
+
+// -- ROTAS TIPO DE SERVIÇO --
+// Cadastrando tipo de serviços
+router.post('/tiposervico', isAuthenticated, isRoleAdmin, upload.single('file'), new CreateTipoServicoController().handle)
+// Listando todos os tipos de serviços que pertencem a X categoria
+router.get('/tiposervico', isAuthenticated, new ListTipoServicoController().handle)
+
+// -- ROTAS SERVIÇOS PRESTADOS PELO PROFISSIONAL -- 
+// Cadastrando serviços prestados pelo profissional
+router.post('/servicosprestados', isAuthenticated, isRoleProfissional, new CreateServicoPrestadosController().handle)
 export { router };
