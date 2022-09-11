@@ -22,6 +22,8 @@ import { ListCategoriaController } from './controllers/categoria/ListCategoriaCo
 import { CreateTipoServicoController } from './controllers/tiposervico/CreateTipoServicoController';
 import { ListTipoServicoController } from './controllers/tiposervico/ListTipoServicoController';
 import { CreateServicoPrestadosController } from './controllers/servicosprestados/CreateServicoPrestadosController'
+import { CreateAgendaController } from './controllers/agenda/CreateAgendaController';
+import { CreatePublicarServicoController } from './controllers/publicarservico/CreatePublicarServicoController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -54,4 +56,13 @@ router.get('/tiposervico', isAuthenticated, new ListTipoServicoController().hand
 // -- ROTAS SERVIÇOS PRESTADOS PELO PROFISSIONAL -- 
 // Cadastrando serviços prestados pelo profissional
 router.post('/servicosprestados', isAuthenticated, isRoleProfissional, new CreateServicoPrestadosController().handle)
+
+// -- ROTAS AGENDA -- 
+// Cadastrando uma nova agenda
+router.post('/agenda', isAuthenticated, isRoleProfissional, new CreateAgendaController().handle)
+
+// -- ROTAS PUBLICAR SERVIÇO --
+// Publicando um novo serviço
+router.post('/publicarservico', isAuthenticated, isRoleProfissional, new CreatePublicarServicoController().handle)
+
 export { router };
