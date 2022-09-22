@@ -31,15 +31,15 @@ class CreatePublicarServicoService {
             throw new Error('Invalid user')
         }
 
-        const servicoAlreadyExists = await prismaClient.publicarServico.findFirst({
-            where:{
-                tipoDoServico_id: tipoDoServico_id
-            }
-        })
+        // const servicoAlreadyExists = await prismaClient.publicarServico.findFirst({
+        //     where:{
+        //         tipoDoServico_id: tipoDoServico_id
+        //     }
+        // })
 
-        if(servicoAlreadyExists){
-            throw new Error("Serviço já existente")
-        }
+        // if(servicoAlreadyExists){
+        //     throw new Error("Serviço já existente")
+        // }
 
         const publicarServico = await prismaClient.publicarServico.create({
             data:{

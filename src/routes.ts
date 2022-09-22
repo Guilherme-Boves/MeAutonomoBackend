@@ -26,6 +26,7 @@ import { CreateAgendaController } from './controllers/agenda/CreateAgendaControl
 import { CreatePublicarServicoController } from './controllers/publicarservico/CreatePublicarServicoController';
 import { CreateContratoController } from './controllers/contrato/CreateContratoController';
 import { CreateAvaliacaoController } from './controllers/avaliacao/CreateAvaliacaoController';
+import { ListPerfisController } from './controllers/perfis/ListPerfisController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -74,5 +75,9 @@ router.post('/contrato', isAuthenticated, new CreateContratoController().handle)
 // -- ROTAS AVALIAÇÕES
 // Realizando uma avaliação de um contrato
 router.post('/avaliacao', isAuthenticated, new CreateAvaliacaoController().handle)
+
+// -- ROTA PERFIS
+// Listando todos os profissionais que prestam o serviço desejado
+router.get('/publicarservico', isAuthenticated, new ListPerfisController().handle)
 
 export { router };
