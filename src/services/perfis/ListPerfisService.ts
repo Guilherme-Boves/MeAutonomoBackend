@@ -7,19 +7,26 @@ interface ListPerfisRequest {
 class ListPerfisService {
     async execute({ tipoServicoId }: ListPerfisRequest){
 
-        console.log(tipoServicoId)
-        const perfis = await prismaClient.publicarServico.findMany({
+        const perfis = await prismaClient.item.findMany({
             where:{
-                tipoDoServico_id: tipoServicoId
+                tipoDoServico_id: tipoServicoId,
+                publicacao:{
+                    ativo: true
+                }
             },
             include:{
-                user: {
-                    select:{
-                        id: true,
-                        nome: true,
+                publicacao: {
+                    select: {
+                        user: {
+                            select:{
+                                id: true,
+                                nome: true,
+                                imagem: true
+                            }
+                        }
                     }
-                },
-            }
+                }
+            },            
         })
 
         return perfis;

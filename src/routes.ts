@@ -27,6 +27,8 @@ import { CreatePublicarServicoController } from './controllers/publicarservico/C
 import { CreateContratoController } from './controllers/contrato/CreateContratoController';
 import { CreateAvaliacaoController } from './controllers/avaliacao/CreateAvaliacaoController';
 import { ListPerfisController } from './controllers/perfis/ListPerfisController';
+import { ListPerfilController } from './controllers/perfil/ListPerfilController';
+import { AddItemController } from './controllers/publicarservico/AddItemController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -67,6 +69,7 @@ router.post('/agenda', isAuthenticated, isRoleProfissional, new CreateAgendaCont
 // -- ROTAS PUBLICAR SERVIÇO --
 // Publicando um novo serviço
 router.post('/publicarservico', isAuthenticated, isRoleProfissional, new CreatePublicarServicoController().handle)
+router.post('/publicarservico/add', isAuthenticated, isRoleProfissional, new AddItemController().handle)
 
 // -- ROTAS CONTRATOS -- 
 // Realizando um novo contrato
@@ -77,7 +80,9 @@ router.post('/contrato', isAuthenticated, new CreateContratoController().handle)
 router.post('/avaliacao', isAuthenticated, new CreateAvaliacaoController().handle)
 
 // -- ROTA PERFIS
-// Listando todos os profissionais que prestam o serviço desejado
-router.get('/publicarservico', isAuthenticated, new ListPerfisController().handle)
+// Listando todos os perfis de profissionais que prestam o serviço desejado
+router.get('/perfis', isAuthenticated, new ListPerfisController().handle)
+//Listando o perfil do profissional desejado
+router.get('/perfil', isAuthenticated, new ListPerfilController().handle)
 
 export { router };

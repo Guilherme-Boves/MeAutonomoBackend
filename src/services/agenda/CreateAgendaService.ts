@@ -4,12 +4,12 @@ interface AgendaRequest {
     dia: string;
     mes: string;
     horario: string;
-    user_id: string
+    item_id: string
 }
 
 class CreateAgendaService {
     
-    async execute({ dia, mes, horario, user_id }: AgendaRequest){
+    async execute({ dia, mes, horario, item_id }: AgendaRequest){
         
         if(dia === ''){
             throw new Error('Invalid day')
@@ -23,8 +23,8 @@ class CreateAgendaService {
             throw new Error('Invalid time')
         }
 
-        if(user_id === ''){
-            throw new Error('Invalid user')
+        if(item_id === ''){
+            throw new Error('Invalid item')
         }
 
         const horarioAlreadyExists = await prismaClient.agenda.findFirst({
@@ -42,7 +42,7 @@ class CreateAgendaService {
                 dia: dia,
                 mes: mes,
                 horario: horario,
-                user_id: user_id
+                item_id: item_id
             }
         })
 

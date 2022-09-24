@@ -5,7 +5,7 @@ class CreateAgendaController {
 
     async handle(req: Request, res: Response){
 
-        const { dia, mes, horario, user_id } = req.body
+        const { dia, mes, horario, item_id } = req.body
 
         const createAgendaService = new CreateAgendaService()
 
@@ -13,7 +13,7 @@ class CreateAgendaController {
             dia,
             mes,
             horario,
-            user_id
+            item_id
         })
 
         return res.json(agenda);

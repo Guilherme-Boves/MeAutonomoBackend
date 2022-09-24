@@ -5,14 +5,14 @@ class CreateServicoPrestadosController {
     
     async handle(req: Request, res: Response){
 
-        const {nome, preco, user_id} = req.body
+        const {nome, preco, item_id} = req.body
 
         const createServicoPrestadosService = new CreateServicoPrestadosService()
 
         const servicoPrestado = await createServicoPrestadosService.execute({
             nome,
             preco,
-            user_id
+            item_id
         })
 
         res.json(servicoPrestado)

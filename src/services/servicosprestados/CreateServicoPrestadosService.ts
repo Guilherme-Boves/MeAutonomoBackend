@@ -3,11 +3,11 @@ import prismaClient from "../../prisma";
 interface ServicoPrestadosRequest {
     nome: string;
     preco: string;
-    user_id: string;
+    item_id: string;
 }
 
 class CreateServicoPrestadosService {
-    async execute({ nome, preco, user_id }: ServicoPrestadosRequest){
+    async execute({ nome, preco, item_id }: ServicoPrestadosRequest){
         
         if(nome === ''){
             throw new Error('Invalid Name')
@@ -15,6 +15,10 @@ class CreateServicoPrestadosService {
         
         if(preco === ''){
             throw new Error('Invalid price')
+        }
+
+        if(item_id === ''){
+            throw new Error('Invalid item')
         }
 
         const servicoPrestadoAlreadyExists = await prismaClient.servicosPrestadosProf.findFirst({
@@ -31,7 +35,7 @@ class CreateServicoPrestadosService {
             data:{
                 nome: nome,
                 preco: preco,
-                user_id: user_id
+                item_id: item_id
             }
         })
         

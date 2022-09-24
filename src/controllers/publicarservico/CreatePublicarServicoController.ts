@@ -4,21 +4,11 @@ import { CreatePublicarServicoService } from '../../services/publicarservico/Cre
 class CreatePublicarServicoController {
     async handle(req: Request, res: Response) {
 
-        const { 
-            tipoDoServico_id, 
-            descricaoServico, 
-            servicoPrestadosProf_id, 
-            agenda_id, 
-            user_id 
-        } = req.body
-
+        const user_id = req.user_id
+        
         const createPublicarServicoService = new CreatePublicarServicoService()
         
-        const publicarServico = await createPublicarServicoService.execute({
-            tipoDoServico_id, 
-            descricaoServico, 
-            servicoPrestadosProf_id, 
-            agenda_id, 
+        const publicarServico = await createPublicarServicoService.execute({             
             user_id
         })
 
