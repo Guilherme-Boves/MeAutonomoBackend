@@ -29,6 +29,13 @@ import { CreateAvaliacaoController } from './controllers/avaliacao/CreateAvaliac
 import { ListPerfisController } from './controllers/perfis/ListPerfisController';
 import { ListPerfilController } from './controllers/perfil/ListPerfilController';
 import { AddItemController } from './controllers/publicarservico/AddItemController';
+import { DeleteItemController } from './controllers/publicarservico/DeleteItemController';
+import { DeletePublicarServicoController } from './controllers/publicarservico/DeletePublicarServicoController';
+import { DeleteServicoPrestadoController } from './controllers/servicosprestados/DeleteServicoPrestadoController';
+import { DeleteAgendaController } from './controllers/agenda/DeleteAgendaController';
+import { UpdateItemController } from './controllers/publicarservico/UpdateItemController';
+import { PublicarServicoController } from './controllers/publicarservico/PublicarServicoController';
+import { GetPublicacoesController } from './controllers/publicarservico/GetPublicacoesController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -61,15 +68,31 @@ router.get('/tiposervico', isAuthenticated, new ListTipoServicoController().hand
 // -- ROTAS SERVIÇOS PRESTADOS PELO PROFISSIONAL -- 
 // Cadastrando serviços prestados pelo profissional
 router.post('/servicosprestados', isAuthenticated, isRoleProfissional, new CreateServicoPrestadosController().handle)
+// Excluindo um serviço prestado cadastrado pelo profissional
+router.delete('/servicosprestados/delete', isAuthenticated, isRoleProfissional, new DeleteServicoPrestadoController().handle)
 
 // -- ROTAS AGENDA -- 
 // Cadastrando uma nova agenda
 router.post('/agenda', isAuthenticated, isRoleProfissional, new CreateAgendaController().handle)
+// Excluindo uma agenda cadastrada pelo profissional
+router.delete('/agenda/delete', isAuthenticated, isRoleProfissional, new DeleteAgendaController().handle)
 
 // -- ROTAS PUBLICAR SERVIÇO --
-// Publicando um novo serviço
+// Criando uma nova publicação
 router.post('/publicarservico', isAuthenticated, isRoleProfissional, new CreatePublicarServicoController().handle)
+// Excluindo uma publicação
+router.delete('/publicarservico', isAuthenticated, isRoleProfissional, new DeletePublicarServicoController().handle)
+// Cadastrando  descricao, publicacao_id e tipoDoServico_id para gerar o ID da tabela de Item
 router.post('/publicarservico/add', isAuthenticated, isRoleProfissional, new AddItemController().handle)
+// Atualizando  descricao, publicacao_id e tipoDoServico_id 
+router.put('/publicarservico/update', isAuthenticated, isRoleProfissional, new UpdateItemController().handle)
+// Deletando Item
+router.delete('/publicarservico/delete', isAuthenticated, isRoleProfissional, new DeleteItemController().handle)
+// Publicando novo Serviço (Tirando ele de rascunho e colocando como Ativo)
+router.put('/publicarservico', isAuthenticated, isRoleProfissional, new PublicarServicoController().handle)
+//Listando todos as publicações do profissional
+router.get('/publicacoes', isAuthenticated, isRoleProfissional, new GetPublicacoesController().handle)
+
 
 // -- ROTAS CONTRATOS -- 
 // Realizando um novo contrato
