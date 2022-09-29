@@ -21,15 +21,15 @@ class CreateServicoPrestadosService {
             throw new Error('Invalid item')
         }
 
-        const servicoPrestadoAlreadyExists = await prismaClient.servicosPrestadosProf.findFirst({
-            where:{
-                nome: nome
-            }
-        })
+        // const servicoPrestadoAlreadyExists = await prismaClient.servicosPrestadosProf.findFirst({
+        //     where:{
+        //         nome: nome
+        //     }
+        // })
 
-        if(servicoPrestadoAlreadyExists){
-            throw new Error("Serviço já cadastrado")
-        }
+        // if(servicoPrestadoAlreadyExists){
+        //     throw new Error("Serviço já cadastrado")
+        // }
         
         const servicoPrestado = await prismaClient.servicosPrestadosProf.create({
             data:{

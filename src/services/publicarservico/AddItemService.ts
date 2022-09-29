@@ -9,6 +9,16 @@ interface ItemRequest {
 class AddItemService {
     async execute({ descricao, publicacao_id, tipoDoServico_id}: ItemRequest){
 
+        const tipoServico = await prismaClient.item.findFirst({
+            where:{
+                tipoDoServico_id: tipoDoServico_id
+            }
+        })
+
+        if(tipoServico) {
+            throw new Error('Tipo de serviço já cadastrado!')
+        }
+
         const publicacao = await prismaClient.item.create({
             data:{
                 descricao: descricao,
