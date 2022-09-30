@@ -21,6 +21,8 @@ class DetailUserService{
                     role: true,
                     dataNascimento: true,
                     telefone: true,
+                    endereco: true,
+                    imagem: true,
                     userCliente: {
                         select:{
                             cpf:true
@@ -42,6 +44,8 @@ class DetailUserService{
                     role: true,
                     telefone: true,
                     dataNascimento: true,
+                    endereco: true,
+                    imagem: true,
                     userProfissional:{
                         select:{
                             cnpj:true,

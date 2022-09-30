@@ -7,6 +7,7 @@ interface UserRequest {
     password: string;    
     telefone: string;
     dataNascimento: string;
+    //imagem: string;
     cpf: string;
 }
 
@@ -25,7 +26,7 @@ export function dateFormat(str){
 }
 
 class CreateUserClienteService{
-    async execute({ nome, email, password, telefone, dataNascimento, cpf }: UserRequest){
+    async execute({ nome, email, password, telefone, dataNascimento, /*imagem,*/ cpf }: UserRequest){
                 
         if(!email){
             throw new Error("Email incorreto")
@@ -51,6 +52,7 @@ class CreateUserClienteService{
                 role: "CLIENTE",                
                 telefone: telefone,
                 dataNascimento: dateFormat(dataNascimento),
+                //imagem: imagem,
                 userCliente:{
                     create: {
                         cpf: cpf
@@ -63,6 +65,7 @@ class CreateUserClienteService{
                 role: true,
                 dataNascimento: true,
                 telefone: true,
+                //imagem: true,
                 userCliente:{
                     select:{
                         cpf: true

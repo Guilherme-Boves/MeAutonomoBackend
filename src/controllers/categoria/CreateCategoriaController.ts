@@ -22,10 +22,7 @@ class CreateCategoriaController {
     
             return res.json(categoria)
         }
-
         
-
-
     }
 }
 

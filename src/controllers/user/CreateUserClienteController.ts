@@ -3,7 +3,9 @@ import { CreateUserClienteService } from "../../services/user/CreateUserClienteS
 
 class CreateUserClienteController{
     async handle(req: Request, res: Response){
+        
         const { nome, email, password, telefone, dataNascimento, cpf } = req.body;
+        //const imagem = `https://ui-avatars.com/api/?background=3700B3&color=FFFFFF&name=${nome}`
 
         const createUserClienteService = new CreateUserClienteService();
 
@@ -13,6 +15,7 @@ class CreateUserClienteController{
             password,
             telefone,
             dataNascimento,
+            //imagem: imagem,
             cpf
         })
         

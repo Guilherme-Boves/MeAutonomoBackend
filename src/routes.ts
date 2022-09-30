@@ -36,6 +36,7 @@ import { DeleteAgendaController } from './controllers/agenda/DeleteAgendaControl
 import { UpdateItemController } from './controllers/publicarservico/UpdateItemController';
 import { PublicarServicoController } from './controllers/publicarservico/PublicarServicoController';
 import { GetPublicacoesController } from './controllers/publicarservico/GetPublicacoesController';
+import { UploadingImagesController } from './controllers/user/UploadingImagesController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -51,7 +52,9 @@ router.post('/session', new AuthUserController().handle)
 router.get('/userinfo', isAuthenticated, /*isRoleClienteProfissional,*/ new DetailUserController().handle);
 //Menu Principal de cada Usuário
 router.get('/dashboard/cliente', isAuthenticated, isRoleCliente, new DashboardClienteController().handle )
-router.get('/dashboard/profissional', isAuthenticated, isRoleProfissional, new DashboardProfissionalController().handle )
+router.get('/dashboard/profissional', isAuthenticated, isRoleProfissional, new DashboardProfissionalController().handle)
+//Atualizando foto der perfil do usuário
+router.put('/user/upload/imagem', isAuthenticated, upload.single('file'), new UploadingImagesController().handle)
 
 // -- ROTAS CATEGORIA --
 // Listando todas categorias
