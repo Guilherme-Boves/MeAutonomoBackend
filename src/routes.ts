@@ -37,6 +37,8 @@ import { UpdateItemController } from './controllers/publicarservico/UpdateItemCo
 import { PublicarServicoController } from './controllers/publicarservico/PublicarServicoController';
 import { GetPublicacoesController } from './controllers/publicarservico/GetPublicacoesController';
 import { UploadingImagesController } from './controllers/user/UploadingImagesController';
+import { UpdateUserInfoProfissionalController } from './controllers/user/UpdateUserInfoProfissionalController';
+import { UpdateUserInfoClienteController } from './controllers/user/UpdateUserInfoClienteController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -55,6 +57,9 @@ router.get('/dashboard/cliente', isAuthenticated, isRoleCliente, new DashboardCl
 router.get('/dashboard/profissional', isAuthenticated, isRoleProfissional, new DashboardProfissionalController().handle)
 //Atualizando foto der perfil do usuário
 router.put('/user/upload/imagem', isAuthenticated, upload.single('file'), new UploadingImagesController().handle)
+//Atualizando dados do cadastro do usuário (Nome de usuário, Telefone, Endereço, Descrição - Sobre Mim)
+router.put('/userinfo/update/profissional', isAuthenticated, isRoleProfissional, new UpdateUserInfoProfissionalController().handle);
+router.put('/userinfo/update/cliente', isAuthenticated, isRoleCliente, new UpdateUserInfoClienteController().handle);
 
 // -- ROTAS CATEGORIA --
 // Listando todas categorias
