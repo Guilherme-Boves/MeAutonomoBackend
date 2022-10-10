@@ -13,7 +13,7 @@ class ListPerfilService {
                 tipoDoServico_id: tipoServico_id,
                 publicacao:{
                     user_id: perfil_id
-                }
+                },                
             },
             include:{
                 publicacao: {
@@ -34,7 +34,11 @@ class ListPerfilService {
                 },
                 tipoDoServico: true,
                 servicosPrestadosProf: true,
-                agenda: true
+                agenda: {
+                    where:{
+                        status: false
+                    }
+                }
             }
         })
         return perfil;

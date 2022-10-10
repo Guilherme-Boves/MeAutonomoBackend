@@ -39,6 +39,9 @@ import { GetPublicacoesController } from './controllers/publicarservico/GetPubli
 import { UploadingImagesController } from './controllers/user/UploadingImagesController';
 import { UpdateUserInfoProfissionalController } from './controllers/user/UpdateUserInfoProfissionalController';
 import { UpdateUserInfoClienteController } from './controllers/user/UpdateUserInfoClienteController';
+import { AddServicoItemController } from './controllers/contrato/AddServicoItemController';
+import { CreateItemContratoController } from './controllers/contrato/CreateItemContratoController';
+import { AddAgendaItemController } from './controllers/contrato/AddAgendaItemController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -105,6 +108,12 @@ router.get('/publicacoes', isAuthenticated, isRoleProfissional, new GetPublicaco
 // -- ROTAS CONTRATOS -- 
 // Realizando um novo contrato
 router.post('/contrato', isAuthenticated, new CreateContratoController().handle)
+// Gerando Id da tabela ItemContrato
+router.post('/contrato/item', isAuthenticated, new CreateItemContratoController().handle)
+// Adicionando o serviço na tabela ItemContratoServico
+router.post('/contrato/addservico', isAuthenticated, new AddServicoItemController().handle)
+// Adicionando o serviço na tabela ItemContratoAgenda
+router.post('/contrato/addagenda', isAuthenticated, new AddAgendaItemController().handle)
 
 // -- ROTAS AVALIAÇÕES
 // Realizando uma avaliação de um contrato
