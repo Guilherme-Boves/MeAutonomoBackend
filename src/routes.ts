@@ -42,6 +42,9 @@ import { UpdateUserInfoClienteController } from './controllers/user/UpdateUserIn
 import { AddServicoItemController } from './controllers/contrato/AddServicoItemController';
 import { CreateItemContratoController } from './controllers/contrato/CreateItemContratoController';
 import { AddAgendaItemController } from './controllers/contrato/AddAgendaItemController';
+import { ListServicosPendentesController } from './controllers/servicos/ListServicosPendentesController';
+import { ListServicosFinalizadosController } from './controllers/servicos/ListServicosFinalizadosController';
+import { FinalizarServicoController } from './controllers/servicos/FinalizarServicoController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -124,5 +127,11 @@ router.post('/avaliacao', isAuthenticated, new CreateAvaliacaoController().handl
 router.get('/perfis', isAuthenticated, new ListPerfisController().handle)
 //Listando o perfil do profissional desejado
 router.get('/perfil', isAuthenticated, new ListPerfilController().handle)
+
+// -- Servicos Pendentes e Finalizados, e Finalizar Serviço
+router.get('/servicos/pendentes', isAuthenticated, new ListServicosPendentesController().handle)
+router.get('/servicos/finalizados', isAuthenticated, new ListServicosFinalizadosController().handle)
+// Finalizar Serviço
+router.put('/servicos/finalizar', isAuthenticated, new FinalizarServicoController().handle )
 
 export { router };

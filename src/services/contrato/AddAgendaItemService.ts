@@ -23,7 +23,7 @@ class AddAgendaItemService {
             }
         })
 
-        await prismaClient.agenda.update({
+        const updateStatusAgenda = await prismaClient.agenda.update({
             where:{
                 id: agenda_id,
             },
@@ -32,7 +32,7 @@ class AddAgendaItemService {
             }
         })
 
-        return addServico
+        return {addServico, updateStatusAgenda}
     }
 }
 

@@ -23,7 +23,7 @@ class CreateItemContratoService{
             }
         })
 
-        await prismaClient.contratos.update({
+        const updateStatusContrato =await prismaClient.contratos.update({
             where:{
                 id: contrato_id,
             },
@@ -33,7 +33,7 @@ class CreateItemContratoService{
             }
         })
 
-        return createItemContrato
+        return {createItemContrato, updateStatusContrato}
     }
 }
 
