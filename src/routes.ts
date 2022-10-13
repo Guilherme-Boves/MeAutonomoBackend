@@ -45,6 +45,7 @@ import { AddAgendaItemController } from './controllers/contrato/AddAgendaItemCon
 import { ListServicosPendentesController } from './controllers/servicos/ListServicosPendentesController';
 import { ListServicosFinalizadosController } from './controllers/servicos/ListServicosFinalizadosController';
 import { FinalizarServicoController } from './controllers/servicos/FinalizarServicoController';
+import { DeleteContratoController } from './controllers/contrato/DeleteContratoController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -117,6 +118,8 @@ router.post('/contrato/item', isAuthenticated, new CreateItemContratoController(
 router.post('/contrato/addservico', isAuthenticated, new AddServicoItemController().handle)
 // Adicionando o serviço na tabela ItemContratoAgenda
 router.post('/contrato/addagenda', isAuthenticated, new AddAgendaItemController().handle)
+// Excluindo o contrato
+router.delete('/contrato', isAuthenticated, new DeleteContratoController().handle)
 
 // -- ROTAS AVALIAÇÕES
 // Realizando uma avaliação de um contrato
