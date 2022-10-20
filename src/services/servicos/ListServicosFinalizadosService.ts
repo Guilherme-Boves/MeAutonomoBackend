@@ -9,12 +9,21 @@ class ListServicosFinalizadosService {
 
         const list = await prismaClient.contratos.findMany({
             where:{
-                user_id: user_id,
+                OR:[
+                    {userCliente_id: user_id},
+                    {userProfissional_id: user_id}
+                ],
                 ativo: false,
                 rascunho: false
             },
             include: {
-                user: {
+                userCliente: {
+                    select: {
+                        id: true,
+                        nome: true,
+                    },
+                },
+                userProfissional: {
                     select: {
                         id: true,
                         nome: true,

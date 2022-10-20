@@ -4,12 +4,12 @@ import { ListServicosPendentesService } from '../../services/servicos/ListServic
 class ListServicosPendentesController{
     async handle(req: Request, res: Response){
 
-        const user_id = req.user_id
+        const user_id = req.user_id        
 
         const listSercicosPendetesService = new ListServicosPendentesService();
 
         const list = await listSercicosPendetesService.execute({
-            user_id: user_id
+            user_id
         })
 
         res.json(list);

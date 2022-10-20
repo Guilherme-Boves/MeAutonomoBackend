@@ -5,15 +5,17 @@ class CreateContratoController {
     
     async handle(req: Request, res: Response){
 
-        const user_id = req.user_id
+        const cliente_id = req.user_id
+        const profissional_id = req.query.profissional_id as string;
 
         const createContratoService = new CreateContratoService()
 
         const contrato = await createContratoService.execute({
-            user_id
+            cliente_id,
+            profissional_id,
         })
 
-        return res.json(contrato)
+        res.json(contrato)
     }
 }
 

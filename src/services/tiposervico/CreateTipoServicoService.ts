@@ -10,11 +10,11 @@ class CreateTipoServicoService {
     async execute({ nome, imagem, categoria_id }: TipoServicoRequest){
         
         if(nome === ''){
-            throw new Error('Invalid Name')
+            throw new Error('Nome inválido')
         }
         
         if(imagem === ''){
-            throw new Error('Invalid image')
+            throw new Error('Imagem inválida')
         }
 
         const tipoServicoAlreadyExists = await prismaClient.tipoDoServico.findFirst({
@@ -24,7 +24,7 @@ class CreateTipoServicoService {
         })
 
         if(tipoServicoAlreadyExists){
-            throw new Error("Categoria já existente")
+            throw new Error("Tipo de serviço já cadastrado")
         }
 
         const tipoServico = await prismaClient.tipoDoServico.create({

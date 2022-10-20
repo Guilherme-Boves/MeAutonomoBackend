@@ -10,11 +10,11 @@ class CreateCategoriaService {
     async execute({ nome, imagem }: CategoriaRequest){
 
         if(nome === ''){
-            throw new Error('Invalid Name')
+            throw new Error('Nome da categoria inválido')
         }
         
         if(imagem === ''){
-            throw new Error('Invalid image')
+            throw new Error('Imagem inválida')
         }
 
         const categoriaAlreadyExists = await prismaClient.categoria.findFirst({
@@ -24,7 +24,7 @@ class CreateCategoriaService {
         })
 
         if(categoriaAlreadyExists){
-            throw new Error("Categoria já existente")
+            throw new Error("Categoria já cadastrada")
         }
         
         const categoria = await prismaClient.categoria.create({

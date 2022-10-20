@@ -28,8 +28,8 @@ export function dateFormat(str){
 class CreateUserClienteService{
     async execute({ nome, email, password, telefone, dataNascimento, /*imagem,*/ cpf }: UserRequest){
                 
-        if(!email){
-            throw new Error("Email incorreto")
+        if(email === '' || nome === '' || password === '' || telefone === '' || dataNascimento === '' || cpf === ''){
+            throw new Error("Preencha todos os campos!")
         }
         
         const userAlreadyExists = await prismaClient.user.findFirst({
@@ -39,7 +39,17 @@ class CreateUserClienteService{
         })
 
         if(userAlreadyExists){
-            throw new Error("Usuário já existente")
+            throw new Error("Email já cadastrado")
+        }
+
+        const cpfAlreadyExists = await prismaClient.userCliente.findFirst({
+            where:{
+                cpf: cpf
+            }
+        })
+
+        if(cpfAlreadyExists){
+            throw new Error("CPF já cadastrado")
         }
 
         const passwordHash = await hash(password, 8)

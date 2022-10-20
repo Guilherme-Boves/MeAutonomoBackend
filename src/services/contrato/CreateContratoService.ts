@@ -1,19 +1,25 @@
 import prismaClient from "../../prisma";
 
 interface ContratoRequest {
-    user_id: string;
+    cliente_id: string;
+    profissional_id: string;
 }
 
 class CreateContratoService {
-    async execute({ user_id }: ContratoRequest){
+    async execute({ cliente_id, profissional_id }: ContratoRequest){
 
-        if(user_id === ''){
-            throw new Error("Invalid user")
+        if(cliente_id === ''){
+            throw new Error("ID do cliente inválido")
         }
-
+        
+        if(profissional_id === ''){
+            throw new Error("ID do profissional inválido")
+        }
+                
         const contrato = await prismaClient.contratos.create({
             data:{
-                user_id: user_id
+                userCliente_id: cliente_id,
+                userProfissional_id: profissional_id,
             }
         })
 

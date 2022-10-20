@@ -1,30 +1,20 @@
 import prismaClient from "../../prisma"
+import { dateFormat } from "../user/CreateUserClienteService";
 
 interface AgendaRequest {
-    dia: string;
-    mes: string;
-    horario: string;
-    item_id: string
+    data: string;
+    item_id: string;
 }
 
 class CreateAgendaService {
     
-    async execute({ dia, mes, horario, item_id }: AgendaRequest){
+    async execute({ data, item_id }: AgendaRequest){
         
-        if(dia === ''){
-            throw new Error('Invalid day')
+        if(data === ''){
+            throw new Error('Data Inválida')
         }
-
-        if(mes === ''){
-            throw new Error('Invalid month')
-        }
-        
-        if(horario === ''){
-            throw new Error('Invalid time')
-        }
-
         if(item_id === ''){
-            throw new Error('Invalid item')
+            throw new Error('Id do Item inválido')
         }
 
         // const horarioAlreadyExists = await prismaClient.agenda.findFirst({
@@ -36,12 +26,10 @@ class CreateAgendaService {
         // if(horarioAlreadyExists){
         //     throw new Error("Hora já cadastrada")
         // } 
-
+        console.log(dateFormat(data))
         const agenda = await prismaClient.agenda.create({
             data:{
-                dia: dia,
-                mes: mes,
-                horario: horario,
+                data: dateFormat(data),
                 item_id: item_id
             }
         })

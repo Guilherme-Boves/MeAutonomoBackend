@@ -15,8 +15,8 @@ interface UserRequest {
 class CreateUserProfissionalService{
     async execute({ nome, email, password, telefone, dataNascimento, cnpj, descricaoSobreMim }: UserRequest){
         
-        if(!email){
-            throw new Error("Email incorreto")
+        if(email === '' || nome === '' || password === '' || telefone === '' || dataNascimento === '' || cnpj === ''){
+            throw new Error("Preencha todos os campos!")
         }
         
         const userAlreadyExists = await prismaClient.user.findFirst({
@@ -26,7 +26,17 @@ class CreateUserProfissionalService{
         })
 
         if(userAlreadyExists){
-            throw new Error("Usuário já existente")
+            throw new Error("Email já cadastrado")
+        }
+
+        const cnpjAlreadyExists = await prismaClient.userProfissional.findFirst({
+            where:{
+                cnpj: cnpj
+            }
+        })
+
+        if(cnpjAlreadyExists){
+            throw new Error("CNPJ já cadastrado")
         }
 
         const passwordHash = await hash(password, 8)
