@@ -17,19 +17,28 @@ class CreateAgendaService {
             throw new Error('Id do Item inválido')
         }
 
-        // const horarioAlreadyExists = await prismaClient.agenda.findFirst({
-        //     where:{
-        //         horario: horario
-        //     }
-        // })
+        let dataNova = new Date(data).toLocaleString()        
+        let aux1 = dataNova.split(' ')
+        let aux2 = aux1[0].split("/")
+        let dia = aux2[0], mes = aux2[1], ano = aux2[2]
+        let dataFormatada = `${ano}-${mes}-${dia}T${aux1[1]}.000Z`
 
-        // if(horarioAlreadyExists){
-        //     throw new Error("Hora já cadastrada")
-        // } 
-        console.log(dateFormat(data))
+        const horarioAlreadyExists = await prismaClient.agenda.findFirst({
+            where:{
+               AND: [
+                { item_id: item_id },
+                { data: dataFormatada },
+               ], 
+            }
+        })
+
+        if(horarioAlreadyExists){
+            throw new Error("Hora já cadastrada")
+        }
+
         const agenda = await prismaClient.agenda.create({
             data:{
-                data: dateFormat(data),
+                data: dataFormatada,
                 item_id: item_id
             }
         })

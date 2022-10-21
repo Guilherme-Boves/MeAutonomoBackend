@@ -1,15 +1,23 @@
 import prismaClient from "../../prisma";
 
 interface ListPerfisRequest {
+    user_id: string;
     tipoServicoId: string;
 }
 
 class ListPerfisService {
-    async execute({ tipoServicoId }: ListPerfisRequest){
+    async execute({ user_id, tipoServicoId }: ListPerfisRequest){
 
         const perfis = await prismaClient.item.findMany({
             where:{
                 tipoDoServico_id: tipoServicoId,
+                NOT:{
+                    publicacao: {
+                        user: {
+                            id: user_id
+                        },
+                    },
+                },
                 publicacao:{
                     ativo: true
                 }

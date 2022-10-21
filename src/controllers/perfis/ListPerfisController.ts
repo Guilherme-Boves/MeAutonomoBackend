@@ -5,11 +5,13 @@ class ListPerfisController {
 
     async handle(req: Request, res: Response ) {
 
+        const user_id = req.user_id;
         const tipoServicoId = req.query.tipoDoServico_id as string;
 
         const listPerfisService = new ListPerfisService();
 
         const response = await listPerfisService.execute({
+            user_id,
             tipoServicoId
         })
 
