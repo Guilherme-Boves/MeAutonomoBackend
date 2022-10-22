@@ -46,6 +46,12 @@ import { ListServicosPendentesController } from './controllers/servicos/ListServ
 import { ListServicosFinalizadosController } from './controllers/servicos/ListServicosFinalizadosController';
 import { FinalizarServicoController } from './controllers/servicos/FinalizarServicoController';
 import { DeleteContratoController } from './controllers/contrato/DeleteContratoController';
+import { ListCategoriaByIdController } from './controllers/categoria/ListCategoriaByIdController';
+import { EditCategoriaController } from './controllers/categoria/EditCategoriaController';
+import { DeleteCategoriaController } from './controllers/categoria/DeleteCategoriaController';
+import { DeleteTipoServicoController } from './controllers/tiposervico/DeleteTipoServicoController';
+import { ListTipoServicoByIdController } from './controllers/tiposervico/ListTipoServicoByIdController';
+import { EditTipoServicoController } from './controllers/tiposervico/EditTipoServicoController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -70,15 +76,27 @@ router.put('/userinfo/update/cliente', isAuthenticated, isRoleCliente, new Updat
 
 // -- ROTAS CATEGORIA --
 // Listando todas categorias
-router.get('/categoria', isAuthenticated, new ListCategoriaController().handle)
+router.get('/categorias', isAuthenticated, isRoleAdmin, new ListCategoriaController().handle)
+// Listando a categoria pelo ID
+router.get('/categoria/', isAuthenticated, isRoleAdmin, new ListCategoriaByIdController().handle)
 // Cadastrando categorias
 router.post('/categoria', isAuthenticated, isRoleAdmin, upload.single('file'), new CreateCategoriaController().handle)
+// Editando categoria
+router.post('/categoria/edit', isAuthenticated, isRoleAdmin, upload.single('file'), new EditCategoriaController().handle)
+// Deletando uma categoria
+router.delete('/categoria/delete', isAuthenticated, isRoleAdmin, new DeleteCategoriaController().handle)
 
 // -- ROTAS TIPO DE SERVIÇO --
 // Cadastrando tipo de serviços
 router.post('/tiposervico', isAuthenticated, isRoleAdmin, upload.single('file'), new CreateTipoServicoController().handle)
 // Listando todos os tipos de serviços que pertencem a X categoria
 router.get('/tiposervico', isAuthenticated, new ListTipoServicoController().handle)
+// Deletando um tipo de serviço
+router.delete('/tiposervico/delete', isAuthenticated, isRoleAdmin, new DeleteTipoServicoController().handle)
+// Listando o tipo de serviço pelo ID
+router.get('/tiposervico/id', isAuthenticated, isRoleAdmin, new ListTipoServicoByIdController().handle)
+// Editando Tipo de Servico
+router.post('/tiposervico/edit', isAuthenticated, isRoleAdmin, upload.single('file'), new EditTipoServicoController().handle)
 
 // -- ROTAS SERVIÇOS PRESTADOS PELO PROFISSIONAL -- 
 // Cadastrando serviços prestados pelo profissional
