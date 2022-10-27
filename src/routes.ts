@@ -52,6 +52,9 @@ import { DeleteCategoriaController } from './controllers/categoria/DeleteCategor
 import { DeleteTipoServicoController } from './controllers/tiposervico/DeleteTipoServicoController';
 import { ListTipoServicoByIdController } from './controllers/tiposervico/ListTipoServicoByIdController';
 import { EditTipoServicoController } from './controllers/tiposervico/EditTipoServicoController';
+import { GetPublicacaoByIdController } from './controllers/publicarservico/GetPublicacaoByIdController';
+import { DeletePublicacaoAtivaController } from './controllers/publicarservico/DeletePublicacaoAtivaController';
+import { CancelarServicoController } from './controllers/servicos/CancelarServicoController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -76,7 +79,7 @@ router.put('/userinfo/update/cliente', isAuthenticated, isRoleCliente, new Updat
 
 // -- ROTAS CATEGORIA --
 // Listando todas categorias
-router.get('/categorias', isAuthenticated, isRoleAdmin, new ListCategoriaController().handle)
+router.get('/categorias', isAuthenticated, new ListCategoriaController().handle)
 // Listando a categoria pelo ID
 router.get('/categoria/', isAuthenticated, isRoleAdmin, new ListCategoriaByIdController().handle)
 // Cadastrando categorias
@@ -125,6 +128,10 @@ router.delete('/publicarservico/delete', isAuthenticated, isRoleProfissional, ne
 router.put('/publicarservico', isAuthenticated, isRoleProfissional, new PublicarServicoController().handle)
 //Listando todos as publicações do profissional
 router.get('/publicacoes', isAuthenticated, isRoleProfissional, new GetPublicacoesController().handle)
+//Listando a publicação pelo Id
+router.get('/publicacao', isAuthenticated, isRoleProfissional, new GetPublicacaoByIdController().handle)
+//Excluindo uma publicação ativa (ativo = true, rascunho = false)
+router.delete('/publicacao', isAuthenticated, isRoleProfissional, new DeletePublicacaoAtivaController().handle)
 
 
 // -- ROTAS CONTRATOS -- 
@@ -153,6 +160,8 @@ router.get('/perfil', isAuthenticated, new ListPerfilController().handle)
 router.get('/servicos/pendentes', isAuthenticated, new ListServicosPendentesController().handle)
 router.get('/servicos/finalizados', isAuthenticated, new ListServicosFinalizadosController().handle)
 // Finalizar Serviço
-router.put('/servicos/finalizar', isAuthenticated, new FinalizarServicoController().handle )
+router.put('/servicos/finalizar', isAuthenticated, new FinalizarServicoController().handle)
+// Cancelar Serviço
+router.delete('/servicos/delete', isAuthenticated, new CancelarServicoController().handle)
 
 export { router };

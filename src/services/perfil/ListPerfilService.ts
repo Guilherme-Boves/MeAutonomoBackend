@@ -23,6 +23,7 @@ class ListPerfilService {
                                 id: true,
                                 nome: true,
                                 imagem: true,
+                                endereco: true,
                                 userProfissional: {
                                     select:{
                                         descricaoSobreMim: true,
@@ -33,10 +34,17 @@ class ListPerfilService {
                     },
                 },
                 tipoDoServico: true,
-                servicosPrestadosProf: true,
+                servicosPrestadosProf: {
+                    orderBy:{
+                        nome: 'asc'
+                    }
+                },
                 agenda: {
                     where:{
                         status: false
+                    },
+                    orderBy:{
+                        data: 'asc'
                     }
                 }
             }

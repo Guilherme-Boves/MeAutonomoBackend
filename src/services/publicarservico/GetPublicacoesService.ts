@@ -17,8 +17,16 @@ class GetPublicacoesService {
                 items: {
                     include:{
                         tipoDoServico: true,
-                        servicosPrestadosProf: true,
-                        agenda: true
+                        servicosPrestadosProf: {
+                            orderBy:{
+                                nome: 'asc'
+                            }
+                        },
+                        agenda: {
+                            orderBy:{
+                                data: 'asc'
+                            }
+                        }
                     }
                 }
 
