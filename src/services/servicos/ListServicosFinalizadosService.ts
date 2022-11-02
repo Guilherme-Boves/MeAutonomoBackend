@@ -30,23 +30,20 @@ class ListServicosFinalizadosService {
                     },
                 },
                 item: {
-                    include:{
+                    include:{                        
                         publicacao: {
                             include: { 
                                 user: {
                                     select: { id: true, nome: true }
                                 }
                             }
-                        },
-                        servicos: {
-                            include:{ servicos: true }
-                        },
-                        agendas: {
-                            include: { agendas: true }
-                        }
+                        },                                                
+                        servicos: true,
+                        agendas: true
                     }
-                },          
-            }
+                },
+                                
+            },
         })
 
         return list

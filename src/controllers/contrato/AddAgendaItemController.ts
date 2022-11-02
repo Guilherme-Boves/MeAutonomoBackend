@@ -4,12 +4,13 @@ import { AddAgendaItemService } from "../../services/contrato/AddAgendaItemServi
 class AddAgendaItemController {
     async handle(req: Request, res: Response) {
 
-        const { itemContrato_id, agenda_id } = req.body;
+        const { itemContrato_id, data, agenda_id } = req.body;
 
         const addAgendaItemService = new AddAgendaItemService();
 
         const addAgenda = await addAgendaItemService.execute({
             itemContrato_id,
+            data,
             agenda_id,
         })
 

@@ -5,7 +5,7 @@ class CreateItemContratoController {
     async handle(req: Request, res: Response) {
 
         const { contrato_id, publicacao_id } = req.body;
-
+        
         const createItemService = new CreateItemContratoService();
 
         const addServico = await createItemService.execute({

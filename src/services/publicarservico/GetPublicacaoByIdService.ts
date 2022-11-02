@@ -7,7 +7,7 @@ interface GetPublicacaoRequest{
 class GetPublicacaoByIdService {
     async execute({ publicacao_id }: GetPublicacaoRequest){
 
-        const publicacao = await prismaClient.publicarServico.findMany({
+        const publicacao = await prismaClient.publicarServico.findFirst({
             where:{
                 id: publicacao_id,
                 ativo: true,

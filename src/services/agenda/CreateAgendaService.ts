@@ -1,5 +1,4 @@
 import prismaClient from "../../prisma"
-import { dateFormat } from "../user/CreateUserClienteService";
 
 interface AgendaRequest {
     data: string;
@@ -33,7 +32,7 @@ class CreateAgendaService {
         })
 
         if(horarioAlreadyExists){
-            throw new Error("Hora já cadastrada")
+            throw new Error("Data já cadastrada!")
         }
 
         const agenda = await prismaClient.agenda.create({

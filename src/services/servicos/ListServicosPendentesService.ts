@@ -38,13 +38,9 @@ class ListServicosPendentesService {
                                 }
                             }
                         },
-                        servicos: {
-                            include:{ servicos: true }
-                        },
-                        agendas: {
-                            include: { agendas: true }
-                        }
-                    }
+                        servicos: true,
+                        agendas: true
+                    },
                 },          
             }
         })

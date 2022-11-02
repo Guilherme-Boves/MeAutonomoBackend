@@ -4,13 +4,13 @@ import { AddServicoItemService } from "../../services/contrato/AddServicoItemSer
 class AddServicoItemController {
     async handle(req: Request, res: Response) {
 
-        const { itemContrato_id, servico_id } = req.body;
+        const { itemContrato_id, nomePreco } = req.body;
 
         const addServicoItemService = new AddServicoItemService();
 
         const addServico = await addServicoItemService.execute({
             itemContrato_id,
-            servico_id,
+            nomePreco
         })
 
         res.json(addServico)

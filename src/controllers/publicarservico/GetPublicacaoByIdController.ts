@@ -6,7 +6,7 @@ class GetPublicacaoByIdController {
     async handle(req: Request, res: Response) {
     
         const publicacao_id = req.query.publicacao_id as string
-
+        
         const getPublicacaoByIdService = new GetPublicacaoByIdService();
 
         const publicacao = await getPublicacaoByIdService.execute({

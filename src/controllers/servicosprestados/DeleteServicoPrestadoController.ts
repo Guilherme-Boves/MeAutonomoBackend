@@ -7,7 +7,7 @@ class DeleteServicoPrestadoController {
         const servico_id = req.query.servico_id as string
 
         const deleteServicoPrestadoService = new DeleteServicoPrestadoService();
-
+        
         const servico = await deleteServicoPrestadoService.execute({
             servico_id
         })

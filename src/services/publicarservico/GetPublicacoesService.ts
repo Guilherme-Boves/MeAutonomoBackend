@@ -16,7 +16,11 @@ class GetPublicacoesService {
             include:{
                 items: {
                     include:{
-                        tipoDoServico: true,
+                        tipoDoServico: {
+                            include:{
+                                categoria: true
+                            }
+                        },
                         servicosPrestadosProf: {
                             orderBy:{
                                 nome: 'asc'
@@ -27,7 +31,7 @@ class GetPublicacoesService {
                                 data: 'asc'
                             }
                         }
-                    }
+                    },                    
                 }
 
             }

@@ -63,7 +63,7 @@ model ServicosPrestadosProf {
 
   item Item @relation(fields: [item_id], references: [id])
 
-  servicos ItemContratoServico[]
+  //servicos ItemContratoServico[]
 
   @@map("servicosPrestadosProf")
   item_id String  
@@ -76,7 +76,7 @@ model Agenda {
 
   item Item @relation(fields: [item_id], references: [id])
   
-  agenda ItemContratoAgenda[]
+  //agenda ItemContratoAgenda[]
   @@map("agenda")
 
   item_id String
@@ -127,7 +127,7 @@ model Item {
 
   publicacao_id String
   tipoDoServico_id String
-
+  user_id String?
 }
 
 model Contratos {
@@ -143,8 +143,8 @@ model Contratos {
   @@map("contratos")
   item ItemContrato[]
 
-  userCliente_id String @default("4324")
-  userProfissional_id String @default("321312")
+  userCliente_id String 
+  userProfissional_id String
 }
 
 model ItemContrato {
@@ -162,26 +162,29 @@ model ItemContrato {
 
 model ItemContratoServico {
   id String @id @default(uuid())
+  nome String
+  preco Decimal? @db.Decimal(10,2)
  
   itemContrato ItemContrato @relation(fields: [itemContrato_id], references: [id])
-  servicos ServicosPrestadosProf @relation(fields: [servico_id], references: [id])
+  //servicos ServicosPrestadosProf @relation(fields: [servico_id], references: [id])
  
   @@map("itemsContratoServico")
  
   itemContrato_id String
-  servico_id String
+  //servico_id String
 }
 
 model ItemContratoAgenda {
   id String @id @default(uuid())
-   
+  data DateTime?
+  agenda_id String
   itemContrato ItemContrato @relation(fields: [itemContrato_id], references: [id])  
-  agendas Agenda @relation(fields: [agenda_id], references: [id])
+  //agendas Agenda @relation(fields: [agenda_id], references: [id])
  
   @@map("itemsContratoAgenda")
 
   itemContrato_id String
-  agenda_id String
+  //agenda_id String
 }
 
 model Avaliacao {
