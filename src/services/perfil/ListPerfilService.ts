@@ -24,6 +24,7 @@ class ListPerfilService {
                                 nome: true,
                                 imagem: true,
                                 endereco: true,
+                                telefone: true,
                                 userProfissional: {
                                     select:{
                                         descricaoSobreMim: true,
