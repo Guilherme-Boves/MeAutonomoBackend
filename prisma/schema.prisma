@@ -134,17 +134,18 @@ model Contratos {
   id String @id @default(uuid())
   rascunho Boolean @default(true)
   ativo Boolean @default(false)
+  avaliacao Boolean @default(false)
 
   userCliente User @relation("userCli_id", fields: [userCliente_id], references: [id])
   userProfissional User @relation("userProf_id", fields: [userProfissional_id], references: [id])
 
-  avaliacao Avaliacao[]
-
   @@map("contratos")
   item ItemContrato[]
+  itemAvaliacao ItemAvaliacao[]
 
   userCliente_id String 
   userProfissional_id String
+  created_at DateTime? @default(now()) //Campo adicionado apenas para ordenar os contratos com as datas menores para maiores (Tela de serviços pendentes e finalizados)
 }
 
 model ItemContrato {
@@ -188,16 +189,30 @@ model ItemContratoAgenda {
 }
 
 model Avaliacao {
-  id String @id @default(uuid())  
-  descricao String
-  nota Int
-
+  id String @id @default(uuid()) 
   user User @relation(fields: [user_id], references: [id])
-  contrato Contratos @relation(fields: [contrato_id], references: [id])
+  //contrato Contratos @relation(fields: [contrato_id], references: [id])
   @@map("avaliacao")
 
+  item ItemAvaliacao[]
+
   user_id String
-  contrato_id String
+  //contrato_id String
 }
 
+model ItemAvaliacao {
+  id String @id @default(uuid())
+  descricao String
+  nota Decimal @db.Decimal(10,2)
+  userProfissional_id String
+  created_at DateTime @default(now())
+
+  contrato Contratos @relation(fields: [contrato_id], references: [id])
+  avaliacao Avaliacao @relation(fields: [avaliacao_id], references: [id])
+
+  @@map("itemsAvaliacao")
+
+  contrato_id String
+  avaliacao_id String
+}
 

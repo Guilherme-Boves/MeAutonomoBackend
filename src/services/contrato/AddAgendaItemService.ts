@@ -1,19 +1,24 @@
 import prismaClient from "../../prisma";
 
 interface AddAgendaItemRequest{
+    contrato_id: string;
     itemContrato_id: string;
     data: string;
     agenda_id: string;
 }
 
 class AddAgendaItemService {
-    async execute({itemContrato_id, data, agenda_id}: AddAgendaItemRequest){
+    async execute({contrato_id, itemContrato_id, data, agenda_id}: AddAgendaItemRequest){
 
-        if(itemContrato_id === '') {
+        if(!contrato_id) {
             throw new Error('Id do contrato inválido')
         }
 
-        if(agenda_id === '') {
+        if(!itemContrato_id) {
+            throw new Error('Id do ItemContrato inválido')
+        }
+
+        if(!agenda_id) {
             throw new Error('Id da agenda inválido')
         }
 
@@ -34,7 +39,16 @@ class AddAgendaItemService {
             }
         })
 
-        return {addServico, updateStatusAgenda}
+        const updateContrateCreatedAtDate = await prismaClient.contratos.update({
+            where:{
+                id: contrato_id
+            },
+            data:{
+                created_at: data
+            }
+        })
+
+        return {addServico, updateStatusAgenda, updateContrateCreatedAtDate}
     }
 }
 

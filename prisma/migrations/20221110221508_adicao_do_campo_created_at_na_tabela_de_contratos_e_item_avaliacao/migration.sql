@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "contratos" ADD COLUMN     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "itemsAvaliacao" ADD COLUMN     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

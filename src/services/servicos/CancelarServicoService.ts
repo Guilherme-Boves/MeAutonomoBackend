@@ -9,6 +9,7 @@ interface CancelarServicoRequest {
 class CancelarServicoService {
     async execute({ contrato_id, itemContrato_id, agenda_id }: CancelarServicoRequest){
 
+        //console.log(contrato_id)
         if(!contrato_id || contrato_id === undefined || contrato_id === ''){
             throw new Error("Id do contrato é inválido")
         }

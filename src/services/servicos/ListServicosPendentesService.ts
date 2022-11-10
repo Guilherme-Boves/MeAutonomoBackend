@@ -42,6 +42,9 @@ class ListServicosPendentesService {
                         agendas: true
                     },
                 },          
+            },
+            orderBy:{
+                created_at: 'asc'
             }
         })
 

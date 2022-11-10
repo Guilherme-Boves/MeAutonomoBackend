@@ -30,7 +30,8 @@ class ListServicosFinalizadosService {
                     },
                 },
                 item: {
-                    include:{                        
+                    include:{
+                        contrato: true,
                         publicacao: {
                             include: { 
                                 user: {
@@ -44,6 +45,9 @@ class ListServicosFinalizadosService {
                 },
                                 
             },
+            orderBy:{
+                created_at: 'desc'
+            }
         })
 
         return list

@@ -55,6 +55,10 @@ import { EditTipoServicoController } from './controllers/tiposervico/EditTipoSer
 import { GetPublicacaoByIdController } from './controllers/publicarservico/GetPublicacaoByIdController';
 import { DeletePublicacaoAtivaController } from './controllers/publicarservico/DeletePublicacaoAtivaController';
 import { CancelarServicoController } from './controllers/servicos/CancelarServicoController';
+import { RealizaAvaliacaoController } from './controllers/avaliacao/RealizaAvaliacaoController';
+import { GetAvaliacoesController } from './controllers/avaliacao/GetAvaliacoesController';
+import { DeleteAvaliacaoController } from './controllers/avaliacao/DeleteAvaliacaoController';
+import { GetAvaliacoesByUserIdController } from './controllers/avaliacao/GetAvaliacoesByUserIdController';
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -147,8 +151,16 @@ router.post('/contrato/addagenda', isAuthenticated, new AddAgendaItemController(
 router.delete('/contrato', isAuthenticated, new DeleteContratoController().handle)
 
 // -- ROTAS AVALIAÇÕES
-// Realizando uma avaliação de um contrato
+// Criando uma nova avaliação (Gerando ID da tabela "avalicao")
 router.post('/avaliacao', isAuthenticated, new CreateAvaliacaoController().handle)
+// Realizando uma avalição (inserindo a descrição, nota...)
+router.post('/avaliacao/send', isAuthenticated, new RealizaAvaliacaoController().handle)
+// Listando todas as avaliações
+router.get('/avaliacoes', isAuthenticated, new GetAvaliacoesController().handle)
+// Listando todas as avaliações do profissional
+router.get('/avaliacoes/id', isAuthenticated, new GetAvaliacoesByUserIdController().handle)
+// Excluindo uma avalição
+router.delete('/avaliacao', isAuthenticated, new DeleteAvaliacaoController().handle)
 
 // -- ROTA PERFIS
 // Listando todos os perfis de profissionais que prestam o serviço desejado
