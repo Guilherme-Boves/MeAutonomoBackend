@@ -20,7 +20,8 @@ class GetAvaliacoesByUserIdService {
                     include:{
                         userCliente: {
                             select:{
-                                nome: true
+                                nome: true,
+                                imagem: true
                             }
                         }
                     }

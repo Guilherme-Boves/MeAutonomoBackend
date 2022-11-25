@@ -10,6 +10,9 @@ class ListByCategoriaService {
         const tipoServicos = await prismaClient.tipoDoServico.findMany({
             where:{
                 categoria_id: categoria_id
+            },
+            orderBy:{
+                nome: 'asc'
             }
         })
 
