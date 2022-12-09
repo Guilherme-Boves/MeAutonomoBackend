@@ -7,6 +7,7 @@ import { router } from './routes';
 
 const app = express();
 app.use(express.json());
+const port = process.env.PORT || 3333
 app.use(cors())
 
 app.use(router);
@@ -30,4 +31,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     })
 })
 
-app.listen(3333, () => console.log("Servidor Online!"));
+app.listen(port, () => console.log(`Servidor Online rodando na porta ${port}`));
